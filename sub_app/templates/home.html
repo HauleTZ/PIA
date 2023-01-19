@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Pneumonia Classification</title>
+	{% load static %}
+     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/select2.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+{#	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">#}
+<style>
+    #div1{
+        border-right: 5px solid;
+        border-radius: 10px;
+    }
+    #div2{
+        border-left: 3px solid;
+        border-radius: 10px;
+    }
+    .message-body{
+        background: lightgray;
+    }
+    .message-area{
+        border-bottom: solid black 2px;
+    }
+</style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="card-box col-12 col-sm-auto bg-light">
+        <div>
+<h1 class="text-center font-weight-bold">Pneumonia Image Analysis</h1><a href="{% url 'image-form' %}">go to radiologist</a>
+   </div>
+        <div class="row mt-3 " >
+            <div class="card card-body col-6 pb-1 col-sm-auto" id="div1" style="background-color: #203647">
+                <form action='getPatientImage' method="post" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                    <!-- upload image by browsing-->
+                <!--<div class="form-group row" >
+                    <label for="file-upload" class="col-form-label text-white">Upload Image</label>
+                  <div class="col-7">
+                      <input id="file-upload" type="file" class="form custom-file-upload form-control" name="image"/>
+                  </div>
+                    <input id="img" type="submit" value="submit" class="btn btn-success pb-2 pull-right">
+                </div>-->
+                   <div class="form-group row" >
+                    <label for="file-upload" class="col-form-label text-white">Patient ID</label>
+                  <div class="col-7">
+                      <input id="file" type="number" class="form custom-file-upload form-control" name="image" required/>
+                  </div>
+                    <input id="img" type="submit" value="submit" class="btn btn-success pb-2 pull-right" >
+                </div>
+                 </form>
+{#              <form  action='upoadbyURL' method="POST" style="text-align: center;">#}
+{#              <div class="form-group row">#}
+{#                  {% csrf_token %}#}
+{#                <input  type="text" placeholder="Add Image URL here" class="form form-control">#}
+{#                <input type="submit" value="submit" class="btn btn-primary pb-2" >#}
+{#              </div>#}
+{##}
+{#             </form>#}
+
+                 <div class="mt-5">
+                <table class="table table-bordered text-white" >
+                    <thead>
+                       <!--{% if percentage > 50 %}
+                        <td><h1 class="text-primary">Most likely  </h1></td>
+                        {% endif %}-->
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Results</td>
+                        {% if pred == "PNEUMONIA" %}
+                        <td><h1 class="text-red"> {{ pred }}</h1></td>
+                            {% else %}
+                            <td><h1 class="text-primary"> {{ pred }}</h1></td>
+
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>Probablity</td>
+                    <td><span >{{ percentage }}%</span></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                  </div>
+
+            <div class="card card-body message-body">
+            <div class="message-area ">
+               <h3 class="text-primary text-capitalize text-center">Alert</h3>
+            </div><br>
+                <div class="text-dark text-body text-bold">
+                {% if pred == "PNEUMONIA" %}
+                 {% if percentage > 59  %}
+{#                     <span class="text-red"><i class="fa fa-share-alt"></i>ALERT </span>#}
+                        <h3 class="">Patient is likely to suffer from pneumonia </h3>
+                         <h3 class=" ">immediate attention is required</h3>
+                 {% elif  percentage <= 59 and percentage > 50 %}
+                        <h3 class="">Patient is likely to suffer from pneumonia </h3>
+                         <h3 class=" ">further check up may required</h3>
+                     {% else  %}
+                     <h3 class=" ">Uncertainity</h3>
+                        {% endif %}
+                {% endif %}
+                {% if pred == "NORMAL" %}
+                 {% if percentage > 59  %}
+{#                     <span class="text-red"><i class="fa fa-share-alt"></i>ALERT </span>#}
+                        <h3 class="">Patient does not suffer from pneumonia</h3>
+                         <h3 class=" "></h3>
+                 {% elif  percentage <= 59 and percentage > 50 %}
+                        <h3 class="">Patient does not suffer from pneumonia<</h3>
+                         <h3 class=" "></h3>
+                     {% else  %}
+                     <h3 class=" ">Uncertainity</h3>
+                        {% endif %}
+                {% endif %}
+                </div>
+            </div>
+            </div>
+            <div class="card col-6 pull-left col-sm-auto" id="div2" style="background-color:#203647 ">
+              <div class="card-body">
+                  <div class="pb-3">
+                <i class="fa fa-image text-white"> Image path: </i><span class="text-primary"> {{ url }}</span>
+                  </div>
+                <img src="{{ url}}" class="img-thumbnail" style="width: 600px; height: 400px "></br>
+
+
+             </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+<div class="row">
+
+    <div class="col col-12">
+    <div class="col-16">
+
+
+
+<div class='divform' >
+
+
+
+</div>
+
+
+
+</div>
+    </div>
+</div>
+</div>
+<script src="{% static 'assets/js/extension.js' %}"></script>
+    <script src="{% static 'assets/js/jquery-3.2.1.min.js' %}"></script>
+	<script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.slimscroll.js' %}"></script>
+    <script src="{% static 'assets/js/select2.min.js' %}"></script>
+	<script src="{% static 'assets/js/moment.min.js' %}"></script>
+	<script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap-datetimepicker.min.js' %}"></script>
+
+<script>
+          $(document).ready(function(){
+            $('#img').click(function(){
+
+
+                var patientId = $('#file').val();
+                if(patientId == '')
+                {
+                    alert("Please enter Patient ID");
+                    return false;
+                }
+
+                var image_name = $('#file-upload').val();
+                if(image_name == '')
+                {
+                    alert("Please Select Image");
+                    return false;
+                }
+                else
+                {
+                    var extension = $('#file-upload').val().split('.').pop().toLowerCase();
+                    if(jQuery.inArray(extension, ['gif','png','jpg','jpeg']) == -1)
+                    {
+                        alert('Invalid Image File');
+                        $('#image').val('');
+                        return false;
+                    }
+                }
+            });
+        });
+</script>
+</body>
+</html>
+

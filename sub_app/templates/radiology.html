@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- login23:11-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <title>Pneumonia Classification</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="../static/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../static/assets/css/style.css">
+    <!--[if lt IE 9]>
+		<script src="assets/js/html5shiv.min.js"></script>
+		<script src="assets/js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+ <div class="main-wrapper" >
+   <div class="header " style="background-color: #203647"  >
+        <div class="header-left">
+            <a href="#" class="logo"> <span></span>
+            </a>
+        </div>
+        <a id="toggle_btn" href="javascript:void(0);"><i class="fa fa-bars"></i></a>
+        <a id="mobile_btn" class="mobile_btn float-left" href="#sidebar"><i class="fa fa-bars"></i></a>
+        <ul class="nav user-menu float-right">
+            <li class="nav-item dropdown d-none d-sm-block">
+            </li>
+        </ul>
+    </div>
+    <div class="sidebar " id="sidebar" style="background-color: lightslategray">
+        <div class="sidebar-inner slimscroll ">
+            <div id="sidebar-menu" class="sidebar-menu">
+                <ul>
+                    <li class="menu-title text-white">Main</li>
+                    <li>
+                        <a href="{% url 'image-form' %}" class="text-white"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a href="{% url 'image-form' %}" class="text-white"><i class="fa fa-upload"></i> <span>upload image</span></a>
+                    </li>
+                    <li>
+                        <a href="{% url 'imagelist' %}" class="text-white"><i class="fa fa-image"></i> <span>image</span></a>
+                    </li>
+                    <li>
+                        <a href="{% url 'home' %}" class="text-white"><i class="fa fa-user"></i> <span>go to Doctor</span></a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+     <div class="content" id="upload" style="margin-top: 7%">
+        <div class="row justify-content-center">
+			<div class="col-md-6" >
+				<div class="card card-body" style="border-radius: 7px;background-color: lightgrey" >
+                    <form action="" class="form-signin" method="post" enctype="multipart/form-data">
+                        {%  csrf_token %}
+						<div class="text-white">
+                            <a href="" class="text-white"><img ></a>
+                        </div>
+                        {{ form.as_p }}
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary account-btn">upload</button>
+                        </div>
+                    </form>
+                </div>
+			</div>
+        </div>
+    </div>
+ </div>
+</div>
+
+    <script src="../static/assets/js/jquery-3.2.1.min.js"></script>
+	<script src="../static/assets/js/popper.min.js"></script>
+    <script src="../static/assets/js/bootstrap.min.js"></script>
+    <script src="../static/assets/js/app.js"></script>
+
+</body>
+
+
+<!-- login23:12-->
+</html>
